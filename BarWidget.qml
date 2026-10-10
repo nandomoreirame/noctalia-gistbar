@@ -1,11 +1,13 @@
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
 import qs.Commons
 import qs.Widgets
 import qs.Services.UI
 import "utils/format.js" as Format
 
-// Bar entry: the GitHub mark. Left click toggles the panel, middle click creates.
+// Bar entry: "Gists" and the GitHub mark (icon only on a vertical bar).
+// Left click toggles the panel, middle click creates.
 Item {
   id: root
 
@@ -32,7 +34,10 @@ Item {
     return (pluginApi?.tr("bar.tooltip") ?? "").replace("{n}", String(mainInstance.gists.length)).replace("{when}", when);
   }
 
-  implicitWidth: Style.capsuleHeight
+  readonly property bool barIsVertical: (Settings.data.bar.position || "top") === "left" || Settings.data.bar.position === "right"
+  readonly property color fg: authError ? Color.mError : (mouseArea.containsMouse ? Color.mOnHover : Color.mOnSurface)
+
+  implicitWidth: barIsVertical ? Style.capsuleHeight : content.implicitWidth + Style.marginM * 2
   implicitHeight: Style.capsuleHeight
 
   Rectangle {
@@ -42,25 +47,38 @@ Item {
     radius: Style.radiusL
     color: mouseArea.containsMouse ? Color.mHover : Style.capsuleColor
 
-    NIcon {
-      id: mark
+    RowLayout {
+      id: content
       anchors.centerIn: parent
-      icon: "brand-github"
-      applyUiScale: false
-      color: root.authError ? Color.mError : (mouseArea.containsMouse ? Color.mOnHover : Color.mOnSurface)
+      spacing: Style.marginS
 
-      SequentialAnimation on opacity {
-        running: root.syncing
-        loops: Animation.Infinite
-        NumberAnimation {
-          to: 0.35
-          duration: 600
+      NText {
+        visible: !root.barIsVertical
+        text: root.pluginApi?.tr("bar.label") ?? ""
+        pointSize: Style.barFontSize
+        font.weight: Style.fontWeightSemiBold
+        color: root.fg
+      }
+
+      NIcon {
+        id: mark
+        icon: "brand-github"
+        applyUiScale: false
+        color: root.fg
+
+        SequentialAnimation on opacity {
+          running: root.syncing
+          loops: Animation.Infinite
+          NumberAnimation {
+            to: 0.35
+            duration: 600
+          }
+          NumberAnimation {
+            to: 1
+            duration: 600
+          }
+          onRunningChanged: if (!running) mark.opacity = 1
         }
-        NumberAnimation {
-          to: 1
-          duration: 600
-        }
-        onRunningChanged: if (!running) mark.opacity = 1
       }
     }
   }

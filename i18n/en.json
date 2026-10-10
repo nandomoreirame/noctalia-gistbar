@@ -63,6 +63,7 @@
     "failed": "gh failed: {msg}"
   },
   "bar": {
+    "label": "Gists",
     "tooltip": "{n} gists · {when}",
     "syncing": "Syncing gists…"
   },

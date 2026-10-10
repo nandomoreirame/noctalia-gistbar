@@ -63,6 +63,7 @@
     "failed": "gh falhou: {msg}"
   },
   "bar": {
+    "label": "Gists",
     "tooltip": "{n} gists · {when}",
     "syncing": "Sincronizando gists…"
   },
