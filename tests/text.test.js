@@ -26,3 +26,13 @@ describe("text.matches", () => {
     expect(matches([], "")).toBe(true);
   });
 });
+
+describe("fold for gist search", () => {
+  it("folds accents and case", () => {
+    expect(fold("Ação RÁPIDA")).toBe("acao rapida");
+  });
+  it("requires every term", () => {
+    expect(matches(["docker cleanup", "docker-clean.sh"], "Docker CLEAN")).toBe(true);
+    expect(matches(["docker cleanup"], "docker python")).toBe(false);
+  });
+});
