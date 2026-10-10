@@ -1,0 +1,12 @@
+{
+  "id": "ccc333",
+  "html_url": "https://gist.github.com/u/ccc333",
+  "description": null,
+  "public": true,
+  "truncated": false,
+  "updated_at": "2026-10-05T08:00:00Z",
+  "files": {
+    "main.py": { "filename": "main.py", "language": "Python", "size": 40, "truncated": false, "content": "import os\nprint(os.getcwd())  # where am I\n" },
+    "README.md": { "filename": "README.md", "language": "Markdown", "size": 30, "truncated": false, "content": "# Ação rápida\n\nImprime o cwd.\n" }
+  }
+}
