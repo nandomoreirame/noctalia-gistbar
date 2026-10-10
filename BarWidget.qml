@@ -35,7 +35,10 @@ Item {
   }
 
   readonly property bool barIsVertical: (Settings.data.bar.position || "top") === "left" || Settings.data.bar.position === "right"
-  readonly property color fg: authError ? Color.mError : (mouseArea.containsMouse ? Color.mOnHover : Color.mOnSurface)
+  // The panel is open on this widget's screen: keep the hover look while it is.
+  readonly property bool panelOpen: !!pluginApi && !!pluginApi.panelOpenScreen && pluginApi.panelOpenScreen.name === screen?.name
+  readonly property bool highlighted: mouseArea.containsMouse || panelOpen
+  readonly property color fg: authError ? Color.mError : (highlighted ? Color.mOnHover : Color.mOnSurface)
 
   implicitWidth: barIsVertical ? Style.capsuleHeight : content.implicitWidth + Style.marginM * 2
   implicitHeight: Style.capsuleHeight
@@ -45,7 +48,7 @@ Item {
     width: root.implicitWidth
     height: root.implicitHeight
     radius: Style.radiusL
-    color: mouseArea.containsMouse ? Color.mHover : Style.capsuleColor
+    color: root.highlighted ? Color.mHover : Style.capsuleColor
 
     RowLayout {
       id: content
