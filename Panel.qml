@@ -36,6 +36,19 @@ Item {
   onLiveItemsChanged: if (asking === 0) frozenItems = liveItems
   onAskingChanged: if (asking === 0) frozenItems = liveItems
   onQueryChanged: selected = 0
+  onSelectedChanged: Qt.callLater(ensureSelectedVisible)
+
+  // Keep the keyboard selection inside the scrolled viewport.
+  function ensureSelectedVisible() {
+    const item = rowsRepeater.itemAt(selected);
+    const flick = scroll.contentItem;
+    if (!item || !flick)
+      return;
+    if (item.y < flick.contentY)
+      flick.contentY = item.y;
+    else if (item.y + item.height > flick.contentY + flick.height)
+      flick.contentY = item.y + item.height - flick.height;
+  }
   onFilterChanged: selected = 0
 
   property real contentPreferredWidth: 640 * Style.uiScaleRatio
@@ -260,6 +273,7 @@ Item {
           spacing: Math.round(2 * Style.uiScaleRatio)
 
           Repeater {
+            id: rowsRepeater
             model: root.items
 
             GistRow {
