@@ -10,6 +10,8 @@ through the `gh` CLI.
 > is a different one (Luau scripts with a `plugin.toml` manifest). A v5 port is
 > planned. See [Compatibility](#compatibility).
 
+![Gistbar panel: search, visibility chips with counts and the gist list](screenshots/panel.png)
+
 ## Compatibility
 
 | Noctalia | Status |
