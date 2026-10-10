@@ -20,6 +20,9 @@ Item {
   property string query: ""
   property string filter: "all"
   property int selected: 0
+  // The selection is only drawn once the arrows are used, so every row looks the
+  // same until the keyboard takes over (Enter still copies row 0 before that).
+  property bool keyNav: false
   property int asking: 0
   property bool showCreate: false
   property var frozenItems: []
@@ -35,7 +38,10 @@ Item {
 
   onLiveItemsChanged: if (asking === 0) frozenItems = liveItems
   onAskingChanged: if (asking === 0) frozenItems = liveItems
-  onQueryChanged: selected = 0
+  onQueryChanged: {
+    selected = 0;
+    keyNav = false;
+  }
   onSelectedChanged: Qt.callLater(ensureSelectedVisible)
 
   // Keep the keyboard selection inside the scrolled viewport.
@@ -49,7 +55,10 @@ Item {
     else if (item.y + item.height > flick.contentY + flick.height)
       flick.contentY = item.y + item.height - flick.height;
   }
-  onFilterChanged: selected = 0
+  onFilterChanged: {
+    selected = 0;
+    keyNav = false;
+  }
 
   property real contentPreferredWidth: 640 * Style.uiScaleRatio
   property real contentPreferredHeight: 420 * Style.uiScaleRatio
@@ -99,6 +108,7 @@ Item {
     if (!visible)
       return;
     nowMs = Date.now();
+    keyNav = false;
     if (mainInstance)
       mainInstance.onPanelOpened();
     if (mainInstance && mainInstance.requestedMode === "create") {
@@ -149,10 +159,12 @@ Item {
           onTextChanged: root.query = text
           Keys.onEscapePressed: text = ""
           Keys.onUpPressed: function (event) {
+            root.keyNav = true;
             root.selected = Math.max(0, root.selected - 1);
             event.accepted = true;
           }
           Keys.onDownPressed: function (event) {
+            root.keyNav = true;
             root.selected = Math.min(Math.max(0, root.items.length - 1), root.selected + 1);
             event.accepted = true;
           }
@@ -168,12 +180,15 @@ Item {
 
         PillButton {
           icon: "plus"
+          Layout.preferredHeight: searchField.height
           text: root.tr("panel.new")
           onClicked: root.openCreateForm()
         }
 
         PillButton {
           icon: "refresh"
+          Layout.preferredHeight: searchField.height
+          Layout.preferredWidth: searchField.height
           tooltipText: root.tr("panel.refresh")
           busy: root.mainInstance?.listState?.syncing ?? false
           onClicked: root.mainInstance?.refreshList()
@@ -282,7 +297,7 @@ Item {
               pluginApi: root.pluginApi
               gist: modelData
               nowMs: root.nowMs
-              selected: root.selected === index
+              selected: root.keyNav && root.selected === index
               busy: !!(root.mainInstance && root.mainInstance.pendingCopy[modelData.id])
               onCopyRequested: root.mainInstance?.copyGist(modelData.id)
               onLinkRequested: root.mainInstance?.copyLink(modelData.id)
