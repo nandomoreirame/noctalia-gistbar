@@ -6,7 +6,7 @@ import qs.Widgets
 import qs.Services.UI
 import "utils/format.js" as Format
 
-// Bar entry: "Gists" and the GitHub mark (icon only on a vertical bar).
+// Bar entry: the GitHub mark and "Gists" (icon only on a vertical bar).
 // Left click toggles the panel, middle click creates.
 Item {
   id: root
@@ -52,14 +52,6 @@ Item {
       anchors.centerIn: parent
       spacing: Style.marginS
 
-      NText {
-        visible: !root.barIsVertical
-        text: root.pluginApi?.tr("bar.label") ?? ""
-        pointSize: Style.barFontSize
-        font.weight: Style.fontWeightSemiBold
-        color: root.fg
-      }
-
       NIcon {
         id: mark
         icon: "brand-github"
@@ -79,6 +71,14 @@ Item {
           }
           onRunningChanged: if (!running) mark.opacity = 1
         }
+      }
+
+      NText {
+        visible: !root.barIsVertical
+        text: root.pluginApi?.tr("bar.label") ?? ""
+        pointSize: Style.barFontSize
+        font.weight: Style.fontWeightSemiBold
+        color: root.fg
       }
     }
   }
