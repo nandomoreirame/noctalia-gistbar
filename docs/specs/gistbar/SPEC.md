@@ -34,7 +34,7 @@ All GitHub access goes through the `gh` CLI: the plugin never handles a token.
 | 1 | Where it lives | Separate plugin `noctalia-gistbar`, id `gistbar` | Own domain, cache and shortcut; publishable alone |
 | 2 | UI kit | Copy Daybar's `components/ui/` (also into `noctalia-aibar`) | No shared-module mechanism between plugins; simplest |
 | 3 | GitHub access | `gh` CLI only; content/JSON through stdin | No token handling; argv carries ids and short text only |
-| 4 | Surface | Bar panel, search focused, no tabs; "New from clipboard" in the header | Fits a list + preview; same pattern as Daybar |
+| 4 | Surface | Bar panel, search focused, no tabs; "New gist" (from clipboard) in the header | Fits a list + preview; same pattern as Daybar |
 | 5 | Search scope | Description, file names, language, content; accent-insensitive; description/name rank above content | Content is why gists exist |
 | 6 | Cache | List every 15 min and on panel open; contents in `~/.cache/noctalia-gistbar/<id>.json` (0600), refetched only when `updated_at` changes; clear-cache button | ~300 KB once, then near zero |
 | 7 | Create | Form prefilled from clipboard, suggested filename, secret by default, `gh gist create ... -`, link to clipboard + toast | Publishing by mistake is the worst failure |
@@ -105,7 +105,7 @@ All GitHub access goes through the `gh` CLI: the plugin never handles a token.
 
 ### Create
 
-- **REQ-010** "New from clipboard" (header button, middle click, `ipc create`) SHALL
+- **REQ-010** "New gist" (header button, creates from the clipboard, middle click, `ipc create`) SHALL
   open a form with the clipboard text (`wl-paste --no-newline`), a suggested
   filename (REQ-011), an empty description and a Public toggle **off**. Save SHALL
   run `gh gist create --filename <name> --desc <desc> [--public] -` with the
