@@ -1,0 +1,14 @@
+{
+  "id": "gistbar",
+  "name": "Gistbar",
+  "version": "0.1.0",
+  "minNoctaliaVersion": "4.6.0",
+  "author": "Fernando Moreira Costa",
+  "license": "MIT",
+  "repository": "https://github.com/nandomoreirame/noctalia-gistbar",
+  "description": "Search, copy, create and edit your GitHub gists from the bar, through the gh CLI.",
+  "tags": ["Bar", "Panel", "Development", "Productivity"],
+  "entryPoints": { "main": "Main.qml", "barWidget": "BarWidget.qml", "panel": "Panel.qml", "settings": "Settings.qml" },
+  "dependencies": { "plugins": [] },
+  "metadata": { "defaultSettings": { "listMinutes": 15 } }
+}
