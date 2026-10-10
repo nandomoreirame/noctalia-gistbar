@@ -1,7 +1,7 @@
 {
   "panel": {
     "search": "Search gists",
-    "new": "New from clipboard",
+    "new": "New gist",
     "refresh": "Refresh",
     "updated": "updated {n} min ago",
     "updated-now": "updated now",

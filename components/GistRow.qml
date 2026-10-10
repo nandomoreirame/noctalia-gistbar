@@ -14,7 +14,6 @@ ListRow {
   property var gist: null
   property var nowMs: 0
   property bool busy: false
-  property bool selected: false
 
   signal copyRequested
   signal linkRequested
@@ -76,7 +75,7 @@ ListRow {
       textFormat: Text.PlainText
       text: root.titleText
       pointSize: Style.fontSizeM
-      font.weight: root.selected ? Style.fontWeightBold : Style.fontWeightSemiBold
+      font.weight: Style.fontWeightSemiBold
       color: Color.mOnSurface
     }
 
@@ -91,9 +90,21 @@ ListRow {
     }
   }
 
-  Chip {
+  // Static language tag: the row's tap opens the preview, so nothing here is clickable.
+  Rectangle {
     visible: root.languageText !== ""
-    text: root.languageText
+    implicitWidth: langLabel.implicitWidth + Math.round(14 * Style.uiScaleRatio)
+    implicitHeight: langLabel.implicitHeight + Math.round(6 * Style.uiScaleRatio)
+    radius: height / 2
+    color: Qt.alpha(Color.mOnSurface, 0.06)
+
+    NText {
+      id: langLabel
+      anchors.centerIn: parent
+      text: root.languageText
+      pointSize: Style.fontSizeXS
+      color: Qt.alpha(Color.mOnSurface, 0.7)
+    }
   }
 
   NIcon {
@@ -110,45 +121,80 @@ ListRow {
     color: Qt.alpha(Color.mOnSurface, 0.42)
   }
 
-  RowLayout {
-    id: actions
-    spacing: Math.round(2 * Style.uiScaleRatio)
-    opacity: root.hovered || root.focusInside || trash.asking ? 1 : 0
+  cursorShape: Qt.PointingHandCursor
 
-    PillButton {
-      icon: "copy"
-      tooltipText: root.tr("row.copy")
-      busy: root.busy
-      onClicked: root.copyRequested()
+  // Hover/Tab actions float over the right edge (language, lock and time stay
+  // in the layout underneath), on an opaque wash with a short fade so they
+  // never cost the title any width.
+  overlay: Rectangle {
+    id: actions
+    opacity: root.hovered || root.focusInside || trash.asking ? 1 : 0
+    readonly property color wash: Qt.tint(Color.mSurface, root.selected ? Qt.alpha(Color.mOnSurface, 0.08) : Qt.alpha(Color.mOnSurface, 0.04))
+    implicitWidth: actionRow.implicitWidth + fade.width
+    implicitHeight: actionRow.implicitHeight
+    width: implicitWidth
+    height: implicitHeight
+    color: "transparent"
+
+    Rectangle {
+      id: fade
+      anchors.left: parent.left
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      width: Math.round(16 * Style.uiScaleRatio)
+      gradient: Gradient {
+        orientation: Gradient.Horizontal
+        GradientStop { position: 0.0; color: Qt.alpha(actions.wash, 0) }
+        GradientStop { position: 1.0; color: actions.wash }
+      }
     }
-    PillButton {
-      icon: "link"
-      tooltipText: root.tr("row.link")
-      onClicked: root.linkRequested()
+
+    Rectangle {
+      anchors.left: fade.right
+      anchors.right: parent.right
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      color: actions.wash
     }
-    PillButton {
-      icon: "external-link"
-      tooltipText: root.tr("row.open")
-      onClicked: root.openRequested()
-    }
-    ConfirmButton {
-      id: trash
-      icon: "trash"
-      tooltipText: root.tr("row.delete")
-      question: root.tr("row.confirm-delete")
-      okText: root.tr("confirm.ok")
-      cancelText: root.tr("confirm.cancel")
-      onConfirmed: root.deleteRequested()
-      onOpened: root.askOpened()
-      onClosed: root.askClosed()
+
+    RowLayout {
+      id: actionRow
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      spacing: Math.round(2 * Style.uiScaleRatio)
+
+      PillButton {
+        icon: "copy"
+        tooltipText: root.tr("row.copy")
+        // The row icon already spins while the content loads; one indicator is enough.
+        enabled: !root.busy
+        onClicked: root.copyRequested()
+      }
+      PillButton {
+        icon: "link"
+        tooltipText: root.tr("row.link")
+        onClicked: root.linkRequested()
+      }
+      PillButton {
+        icon: "external-link"
+        tooltipText: root.tr("row.open")
+        onClicked: root.openRequested()
+      }
+      ConfirmButton {
+        id: trash
+        icon: "trash"
+        tooltipText: root.tr("row.delete")
+        question: root.tr("row.confirm-delete")
+        okText: root.tr("confirm.ok")
+        cancelText: root.tr("confirm.cancel")
+        onConfirmed: root.deleteRequested()
+        onOpened: root.askOpened()
+        onClosed: root.askClosed()
+      }
     }
   }
 
   TapHandler {
     onTapped: root.previewRequested()
-  }
-
-  HoverHandler {
-    cursorShape: Qt.PointingHandCursor
   }
 }

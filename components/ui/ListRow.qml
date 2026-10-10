@@ -3,11 +3,17 @@ import QtQuick.Layouts
 import QtQuick.Window
 import qs.Commons
 
-// List line with a soft hover wash. Children go into the inner RowLayout.
+// List line with a soft hover wash. Children go into the inner RowLayout;
+// `overlay` children float over the row's right edge (hover actions) without
+// taking layout width.
 Rectangle {
   id: root
 
   default property alias content: row.data
+  property alias overlay: overlayHost.data
+  property alias cursorShape: hover.cursorShape
+  // Keyboard selection: a stronger wash and a primary outline.
+  property bool selected: false
   readonly property bool hovered: hover.hovered
   // True when the active focus item is this row or one of its descendants
   // (action buttons, inline editors). Views use it with hover/asking to keep
@@ -25,7 +31,9 @@ Rectangle {
   Layout.fillWidth: true
   implicitHeight: Math.max(Math.round(30 * Style.uiScaleRatio), row.implicitHeight + Math.round(8 * Style.uiScaleRatio))
   radius: Math.round(8 * Style.uiScaleRatio)
-  color: hovered ? Qt.alpha(Color.mOnSurface, 0.04) : "transparent"
+  color: selected ? Qt.alpha(Color.mOnSurface, 0.08) : hovered ? Qt.alpha(Color.mOnSurface, 0.04) : "transparent"
+  border.color: selected ? Qt.alpha(Color.mPrimary, 0.5) : "transparent"
+  border.width: Style.borderS
 
   HoverHandler {
     id: hover
@@ -37,5 +45,15 @@ Rectangle {
     anchors.leftMargin: Math.round(6 * Style.uiScaleRatio)
     anchors.rightMargin: Math.round(6 * Style.uiScaleRatio)
     spacing: Math.round(8 * Style.uiScaleRatio)
+  }
+
+  Item {
+    id: overlayHost
+    anchors.right: parent.right
+    anchors.rightMargin: Math.round(4 * Style.uiScaleRatio)
+    anchors.verticalCenter: parent.verticalCenter
+    width: childrenRect.width
+    height: childrenRect.height
+    z: 2
   }
 }

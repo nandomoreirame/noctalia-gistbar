@@ -1,7 +1,7 @@
 {
   "panel": {
     "search": "Buscar gists",
-    "new": "Novo a partir da área de transferência",
+    "new": "Novo gist",
     "refresh": "Atualizar",
     "updated": "atualizado há {n} min",
     "updated-now": "atualizado agora",
