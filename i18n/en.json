@@ -1,0 +1,80 @@
+{
+  "panel": {
+    "search": "Search gists",
+    "new": "New from clipboard",
+    "refresh": "Refresh",
+    "updated": "updated {n} min ago",
+    "updated-now": "updated now",
+    "stale": "stale",
+    "empty": "No gists yet.",
+    "no-results": "Nothing matches \"{q}\"."
+  },
+  "chip": {
+    "all": "All",
+    "public": "Public",
+    "secret": "Secret"
+  },
+  "row": {
+    "copy": "Copy content",
+    "link": "Copy link",
+    "open": "Open in browser",
+    "delete": "Delete",
+    "confirm-delete": "Delete this gist?",
+    "secret": "Secret gist",
+    "files": "{n} files"
+  },
+  "confirm": {
+    "ok": "OK",
+    "cancel": "Cancel"
+  },
+  "toast": {
+    "copied": "Copied",
+    "link-copied": "Link copied",
+    "created": "Gist created",
+    "deleted": "Gist deleted",
+    "saved": "Gist saved",
+    "failed": "gh failed"
+  },
+  "create": {
+    "title": "New gist",
+    "filename": "File name",
+    "description": "Description",
+    "public": "Public",
+    "public-desc": "Off keeps it secret (only people with the link).",
+    "save": "Create",
+    "cancel": "Cancel",
+    "empty-clipboard": "The clipboard has no text."
+  },
+  "preview": {
+    "edit": "Edit",
+    "view": "View",
+    "save": "Save",
+    "close": "Close",
+    "copy": "Copy file",
+    "description": "Description",
+    "discard": "Discard unsaved changes?",
+    "truncated": "File too large to show in full.",
+    "hints": "Ctrl+E edit/view · Ctrl+S save · Esc close"
+  },
+  "error": {
+    "gh-login": "Run `gh auth login`",
+    "gh-missing": "Install the GitHub CLI (`gh`)",
+    "network": "Network error",
+    "failed": "gh failed: {msg}"
+  },
+  "bar": {
+    "tooltip": "{n} gists · {when}",
+    "syncing": "Syncing gists…"
+  },
+  "settings": {
+    "list-minutes": "Refresh the list every (minutes)",
+    "clear-cache": "Clear cache",
+    "clear-cache-desc": "Deletes the downloaded gist contents; they are fetched again."
+  },
+  "time": {
+    "now": "now",
+    "minutes": "{n} min ago",
+    "hours": "{n} h ago",
+    "days": "{n} d ago"
+  }
+}

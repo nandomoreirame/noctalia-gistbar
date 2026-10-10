@@ -1,0 +1,80 @@
+{
+  "panel": {
+    "search": "Buscar gists",
+    "new": "Novo a partir da área de transferência",
+    "refresh": "Atualizar",
+    "updated": "atualizado há {n} min",
+    "updated-now": "atualizado agora",
+    "stale": "desatualizado",
+    "empty": "Nenhum gist ainda.",
+    "no-results": "Nada corresponde a \"{q}\"."
+  },
+  "chip": {
+    "all": "Todos",
+    "public": "Público",
+    "secret": "Secreto"
+  },
+  "row": {
+    "copy": "Copiar conteúdo",
+    "link": "Copiar link",
+    "open": "Abrir no navegador",
+    "delete": "Excluir",
+    "confirm-delete": "Excluir este gist?",
+    "secret": "Gist secreto",
+    "files": "{n} arquivos"
+  },
+  "confirm": {
+    "ok": "OK",
+    "cancel": "Cancelar"
+  },
+  "toast": {
+    "copied": "Copiado",
+    "link-copied": "Link copiado",
+    "created": "Gist criado",
+    "deleted": "Gist excluído",
+    "saved": "Gist salvo",
+    "failed": "gh falhou"
+  },
+  "create": {
+    "title": "Novo gist",
+    "filename": "Nome do arquivo",
+    "description": "Descrição",
+    "public": "Público",
+    "public-desc": "Desligado mantém secreto (só quem tem o link).",
+    "save": "Criar",
+    "cancel": "Cancelar",
+    "empty-clipboard": "A área de transferência não tem texto."
+  },
+  "preview": {
+    "edit": "Editar",
+    "view": "Ver",
+    "save": "Salvar",
+    "close": "Fechar",
+    "copy": "Copiar arquivo",
+    "description": "Descrição",
+    "discard": "Descartar alterações não salvas?",
+    "truncated": "Arquivo grande demais para mostrar por completo.",
+    "hints": "Ctrl+E editar/ver · Ctrl+S salvar · Esc fechar"
+  },
+  "error": {
+    "gh-login": "Execute `gh auth login`",
+    "gh-missing": "Instale a CLI do GitHub (`gh`)",
+    "network": "Erro de rede",
+    "failed": "gh falhou: {msg}"
+  },
+  "bar": {
+    "tooltip": "{n} gists · {when}",
+    "syncing": "Sincronizando gists…"
+  },
+  "settings": {
+    "list-minutes": "Atualizar a lista a cada (minutos)",
+    "clear-cache": "Limpar cache",
+    "clear-cache-desc": "Apaga o conteúdo baixado dos gists; eles são buscados de novo."
+  },
+  "time": {
+    "now": "agora",
+    "minutes": "há {n} min",
+    "hours": "há {n} h",
+    "days": "há {n} d"
+  }
+}
